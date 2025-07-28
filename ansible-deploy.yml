@@ -1,0 +1,12 @@
+- name: Deploy Flask App on K8s
+  hosts: k8s-nodes
+  become: yes
+  tasks:
+    - name: Create Kubernetes Deployment
+      copy:
+        src: deployment.yaml
+        dest: /tmp/deployment.yaml
+
+    - name: Apply Deployment
+      shell: "kubectl apply -f /tmp/deployment.yaml"
+
