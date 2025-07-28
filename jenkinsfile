@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+    stages {
+        stage('Clone') {
+            steps {
+                git 'https://github.com/himanshukr8090/LW_Project_13_Full_DevOps_Workflow_Code-Push_Jenkins_Build_Ansible_Deploy_Docker_Container.git'
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t flask-app .'
+                sh 'docker tag flask-app himanshu8090/flask-app:v1'
+                sh 'docker push himanshu8090/flask-app:v1'
+            }
+        }
+        stage('Deploy via Ansible') {
+            steps {
+                sh 'ansible-playbook deploy.yml'
+            }
+        }
+    }
+}
+
